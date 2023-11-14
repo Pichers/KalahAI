@@ -1,3 +1,10 @@
+#Função de avaliação de estados de Kalah no contexto da
+#Avaliação Contínua 3 da UC IIA de 2023/2024
+#
+#António Almeida - fc58235
+#Pedro Cardoso - fc58212
+#14 de Novembro de 2023
+
 from kalah import *
 from jogos import *
 from utils import *
@@ -53,9 +60,9 @@ def func_COCDQL(estado, jogador):
 
     #Maximum steal in this move
     if estado.to_move == jogador:
-        result -= steal(estado, jogador) * POTENTIAL_STEAL
+        result -= steal_COCDQL(estado, jogador) * POTENTIAL_STEAL
     else:
-        result += steal(estado, estado.to_move) * POTENTIAL_STEAL
+        result += steal_COCDQL(estado, estado.to_move) * POTENTIAL_STEAL
 
     #Can play again
     if estado.to_move == jogador:
@@ -73,7 +80,7 @@ def func_COCDQL(estado, jogador):
 
 
 
-def steal(state, toMove):
+def steal_COCDQL(state, toMove):
     maxSteal = 0
     isSouth = (toMove == state.SOUTH)
     board = state.state
@@ -87,13 +94,11 @@ def steal(state, toMove):
             if newPos < 6 and board[newPos] == 0:
                 if board[12 - newPos] > maxSteal:
                     maxSteal = board[12 - newPos]
-                #stolen += board[12 - newPos]
         else:
             
             if newPos > 6 and board[newPos] == 0:
                 if board[12 - newPos] > maxSteal:
                     maxSteal = board[12 - newPos]
-                #stolen += board[12 - newPos]
 
         return maxSteal + 1
 
